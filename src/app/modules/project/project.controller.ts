@@ -4,7 +4,6 @@ import sendResponse from '../../utils/sendResponse';
 import { projectServices } from './project.service';
 
 const createProject = catchAsync(async (req, res) => {
-  console.log("found")
   const result = await projectServices.createProject(req.body);
 
   sendResponse(res, {
@@ -24,9 +23,44 @@ const getAllProject = catchAsync(async (req, res) => {
     data: result
   });
 });
+const updateProjectById = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await projectServices.updateProjectById(id, req.body);
 
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Project is updated successfully',
+    data: result,
+  });
+});
+const updateProjectImageById = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await projectServices.updateProjectImageById(id, req.body);
 
-export const productControllers = {
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Project image is updated successfully',
+    data: result,
+  });
+});
+
+const deleteProjectById = catchAsync(async (req, res) => {
+  const id = req.body;
+  const result = await projectServices.deleteProjectById(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Project is deleted successfully',
+    data: result && null,
+  });
+});
+
+export const projectControllers = {
   createProject,
   getAllProject,
+  updateProjectById,
+  deleteProjectById,
+  updateProjectImageById
 };

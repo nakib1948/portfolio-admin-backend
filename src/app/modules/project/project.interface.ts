@@ -7,4 +7,5 @@ export type TProject = {
   client: string;
   server: string;
   liveSite: string;
+  coverImage: string;
 };

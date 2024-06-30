@@ -9,19 +9,24 @@ const getAllProject = async () => {
   return await Project.find({}) ;
 };
 
-// const updateBookById = async (bookId: string, payload: Partial<TBook>) => {
-//   const result = await Product.findByIdAndUpdate({ _id: bookId }, payload);
-//   return result;
-// };
+const updateProjectById = async (projectId: string, payload: Partial<TProject>) => {
+  const result = await Project.findByIdAndUpdate({ _id: projectId }, payload);
+  return result;
+};
+const updateProjectImageById = async (projectId: string, payload: Partial<TProject>) => {
+  const result = await Project.findByIdAndUpdate({ _id: projectId }, { $push: { image: [payload] } });
+  return result;
+};
 
-// const deleteBookById = async (BookId: string[]) => {
-//   const result = await Product.deleteMany({ _id: { $in: BookId } });
-//   return result;
-// };
+const deleteProjectById = async (projectId: string[]) => {
+  const result = await Project.deleteOne({ _id: projectId});
+  return result;
+};
 
 export const projectServices = {
   createProject,
   getAllProject,
-  // deleteBookById,
-  // updateBookById,
+  updateProjectById,
+  deleteProjectById,
+  updateProjectImageById
 };

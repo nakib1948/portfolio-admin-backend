@@ -30,6 +30,10 @@ const projectSchema = new Schema<TProject>({
     type: String,
     required: true,
   },
+  coverImage:{
+    type:String,
+    required:true
+  }
 });
 
 export const Project = model<TProject>('Project', projectSchema);
