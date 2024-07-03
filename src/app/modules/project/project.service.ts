@@ -6,20 +6,31 @@ const createProject = async (project: TProject) => {
 };
 
 const getAllProject = async () => {
-  return await Project.find({}) ;
+  return await Project.find({});
+};
+const getSingleProject = async (id: string) => {
+  return await Project.findById(id);
 };
 
-const updateProjectById = async (projectId: string, payload: Partial<TProject>) => {
-  const result = await Project.findByIdAndUpdate({ _id: projectId }, payload);
-  return result;
-};
-const updateProjectImageById = async (projectId: string, payload: Partial<TProject>) => {
-  const result = await Project.findByIdAndUpdate({ _id: projectId }, { $push: { image: [payload] } });
-  return result;
+const updateProjectById = async (
+  projectId: string,
+  payload: Partial<TProject>,
+) => {
+  const { image, ...rest } = payload;
+
+  const updatedProject = await Project.findByIdAndUpdate(
+    projectId,
+    {
+      $addToSet: { image: image[0] },
+      $set: { ...rest },
+    },
+    { new: true, runValidators: true },
+  );
+  return updatedProject;
 };
 
-const deleteProjectById = async (projectId: string[]) => {
-  const result = await Project.deleteOne({ _id: projectId});
+const deleteProjectById = async (projectId: string) => {
+  const result = await Project.deleteOne({ _id: projectId });
   return result;
 };
 
@@ -28,5 +39,5 @@ export const projectServices = {
   getAllProject,
   updateProjectById,
   deleteProjectById,
-  updateProjectImageById
+  getSingleProject,
 };

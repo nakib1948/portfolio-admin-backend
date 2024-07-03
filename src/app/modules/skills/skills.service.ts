@@ -8,6 +8,9 @@ const createSkill = async (skill: TSkill) => {
 const getAllSkill = async () => {
   return await Skill.find({});
 };
+const getSingleSkill = async (id:string) => {
+  return await Skill.findById(id);
+};
 
 const updateSkillById = async (skillId: string, payload: Partial<TSkill>) => {
   const result = await Skill.findByIdAndUpdate({ _id: skillId }, payload);
@@ -24,4 +27,5 @@ export const skillServices = {
   getAllSkill,
   updateSkillById,
   deleteSkillById,
+  getSingleSkill
 };

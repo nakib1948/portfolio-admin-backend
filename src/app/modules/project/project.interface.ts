@@ -1,4 +1,3 @@
-
 export type TProject = {
   name: string;
   description: string;

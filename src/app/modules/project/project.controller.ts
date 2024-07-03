@@ -20,7 +20,17 @@ const getAllProject = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Projects are retrieved successfully',
-    data: result
+    data: result,
+  });
+});
+const getSingleProject = catchAsync(async (req, res) => {
+  const result = await projectServices.getSingleProject(req.params.id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Project is retrieved successfully',
+    data: result,
   });
 });
 const updateProjectById = catchAsync(async (req, res) => {
@@ -34,21 +44,9 @@ const updateProjectById = catchAsync(async (req, res) => {
     data: result,
   });
 });
-const updateProjectImageById = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = await projectServices.updateProjectImageById(id, req.body);
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Project image is updated successfully',
-    data: result,
-  });
-});
 
 const deleteProjectById = catchAsync(async (req, res) => {
-  const id = req.body;
-  const result = await projectServices.deleteProjectById(id);
+  const result = await projectServices.deleteProjectById(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -62,5 +60,5 @@ export const projectControllers = {
   getAllProject,
   updateProjectById,
   deleteProjectById,
-  updateProjectImageById
+  getSingleProject,
 };

@@ -13,17 +13,14 @@ router.post(
   projectControllers.createProject,
 );
 router.get('/', auth(), projectControllers.getAllProject);
+router.get('/:id', auth(), projectControllers.getSingleProject);
 router.patch(
   '/updateproject/:id',
   auth(),
   validateRequest(projectValidation.projectUpdateValidationSchema),
   projectControllers.updateProjectById,
 );
-router.patch(
-  '/updateprojectImage/:id',
-  auth(),
-  projectControllers.updateProjectImageById,
-);
-router.delete('/deleteproject', auth(), projectControllers.deleteProjectById);
+
+router.delete('/deleteproject/:id', auth(), projectControllers.deleteProjectById);
 
 export const projectRoutes = router;
